@@ -1,5 +1,5 @@
 const express = require("express");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
@@ -8,7 +8,7 @@ const app = express();
 const router = require("./routes/index");
 
 app.use(express.json());
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(cors());
 
 const { PORT, DB_USERNAME, DB_PASSWORD, NODE_ENV } = process.env || 2005;
