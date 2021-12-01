@@ -13,8 +13,8 @@ app.use(cors());
 
 const { PORT, DB_USERNAME, DB_PASSWORD, NODE_ENV } = process.env || 2005;
 
-const connectDB = require("./databases/db");
-connectDB;
+// const connectDB = require("./databases/db");
+// connectDB;
 
 app.get("/", (req, res, next) => {
   res.status(200).json({ message: "The main application route" });
