@@ -33,7 +33,7 @@ app.listen(PORT, (req, res, next) => {
     )
     .then(() => console.log("Database connected"))
     .catch(() => console.log("Database not connected"));
-  console.log(`Application running on PORT ${PORT}`);
+  console.log(`Application running on a PORT ${PORT}`);
 });
 
 module.exports = app;
