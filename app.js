@@ -36,10 +36,4 @@ app.listen(PORT, (req, res, next) => {
   console.log(`Application running on PORT ${PORT}`);
 });
 
-// if (!NODE_ENV) {
-//   app.listen(PORT, (req, res, next) => {
-//     console.log(`Application running on PORT ${PORT}`);
-//   });
-// }
-
 module.exports = app;
