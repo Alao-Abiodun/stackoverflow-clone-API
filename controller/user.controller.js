@@ -75,45 +75,6 @@ exports.signIn = async (req, res, next) => {
   }
 };
 
-exports.updateUser = async (req, res, next) => {
-  try {
-    // get the user
-    const { user } = req.params;
-    // fetch the data.
-    client.get(user, async (_, user) => {
-      if (user) {
-        // send response from cache
-        Response(res).success(
-          { data: JSON.parse(user) },
-          200,
-          "data fetch from cache"
-        );
-      } else {
-        // fetch the data.
-        const user = await User.findOne({ _id: user });
-        // set the data on cache
-        client.set(user, JSON.stringify(user));
-        // send the response
-        Response(res).success({ user }, 200, "data fetch from the server");
-      }
-    });
-    // const userExist = await User.findOne({ _id: id });
-    // if (!userExist) {
-    //   throw Error("User does not exist", 401);
-    // }
-    // const updateUser = await User.findOneAndUpdate({ _id: id }, req.body, {
-    //   new: true,
-    //   upsert: true,
-    // });
-    // Response(res).success(
-    //   { message: "User profile updated", data: updateUser },
-    //   200
-    // );
-  } catch (error) {
-    Response(res).error(error, error.code);
-  }
-};
-
 exports.fetchSingleUser = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -126,7 +87,47 @@ exports.fetchSingleUser = async (req, res) => {
         Response(res).success({ user }, 200, "data fetched from the server");
       }
     });
-  } catch (error) {}
+  } catch (error) {
+    Response(res).error(error, error.code);
+  }
+};
+
+exports.updateUser = async (req, res, next) => {
+  try {
+    // get the user
+    const { user } = req.params;
+    // fetch the data.
+    // client.get(user, async (_, user) => {
+    //   if (user) {
+    //     // send response from cache
+    //     Response(res).success(
+    //       { data: JSON.parse(user) },
+    //       200,
+    //       "data fetch from cache"
+    //     );
+    //   } else {
+    //     // fetch the data.
+    //     const user = await User.findOne({ _id: user });
+    //     // set the data on cache
+    //     client.set(user, JSON.stringify(user));
+    //     // send the response
+    //     Response(res).success({ user }, 200, "data fetch from the server");
+    //   }
+    const userExist = await User.findOne({ _id: user });
+    if (!userExist) {
+      throw Error("User does not exist", 401);
+    }
+    const updateUser = await User.findOneAndUpdate({ _id: user }, req.body, {
+      new: true,
+      upsert: true,
+    });
+    Response(res).success(
+      { message: "User profile updated", data: updateUser },
+      200
+    );
+  } catch (error) {
+    Response(res).error(error, error.code);
+  }
 };
 
 exports.fetchUsers = async (req, res) => {
